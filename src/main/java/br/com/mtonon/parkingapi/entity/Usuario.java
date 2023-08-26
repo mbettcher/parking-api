@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
-public class UsuarioEntity implements Serializable {
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -66,7 +66,7 @@ public class UsuarioEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UsuarioEntity other = (UsuarioEntity) obj;
+		Usuario other = (Usuario) obj;
 		return Objects.equals(id, other.id);
 	}
 
