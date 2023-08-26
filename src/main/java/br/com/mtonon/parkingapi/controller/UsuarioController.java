@@ -1,5 +1,7 @@
 package br.com.mtonon.parkingapi.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,12 @@ public class UsuarioController {
 	public ResponseEntity<Usuario> updatePassword(@PathVariable Long id, @RequestBody Usuario usuario) {
 		Usuario user = this.usuarioService.editPassword(id, usuario);
 		return ResponseEntity.ok().body(user);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Usuario>> getAll() {
+		List<Usuario> listagem = this.usuarioService.buscarTodos();
+		return ResponseEntity.ok().body(listagem);
 	}
 
 }

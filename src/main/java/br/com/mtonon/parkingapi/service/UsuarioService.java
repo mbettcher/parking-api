@@ -1,5 +1,7 @@
 package br.com.mtonon.parkingapi.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,10 @@ public class UsuarioService {
 		Usuario user = find(id);
 		user.setPassword(usuario.getPassword());
 		return user;
+	}
+
+	public List<Usuario> buscarTodos() {
+		return this.usuarioRepository.findAll();
 	}
 
 }
