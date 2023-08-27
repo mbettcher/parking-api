@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.ToString;
@@ -33,6 +35,7 @@ public class ErrorMessage {
 	
 	private String message;
 	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Map<String, String> errors;
 	
 	
