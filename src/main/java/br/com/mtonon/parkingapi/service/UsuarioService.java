@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.mtonon.parkingapi.entity.Usuario;
 import br.com.mtonon.parkingapi.repository.UsuarioRepository;
 import br.com.mtonon.parkingapi.service.exception.EntityNotFoundException;
+import br.com.mtonon.parkingapi.service.exception.PasswordInvalidException;
 import br.com.mtonon.parkingapi.service.exception.UsernameUniqueViolationException;
 import lombok.RequiredArgsConstructor;
 
@@ -36,19 +37,20 @@ public class UsuarioService {
 	@Transactional
 	public Usuario editPassword(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
 		if(!novaSenha.equals(confirmaSenha)) {
-			throw new RuntimeException("A nova senha é diferente de confirmação de senha!");
+			throw new PasswordInvalidException("A nova senha é diferente de confirmação de senha!");
 		}
 		
 		Usuario user = find(id);
 		
 		if(!senhaAtual.equals(user.getPassword())) {
-			throw new RuntimeException("A senha atual não confere!");
+			throw new PasswordInvalidException("A senha atual não confere!");
 		}
 
 		user.setPassword(novaSenha);
 		return user;
 	}
-
+	
+	@Transactional(readOnly = true)
 	public List<Usuario> buscarTodos() {
 		return this.usuarioRepository.findAll();
 	}

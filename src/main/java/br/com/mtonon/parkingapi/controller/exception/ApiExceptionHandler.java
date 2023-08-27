@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.mtonon.parkingapi.service.exception.EntityNotFoundException;
+import br.com.mtonon.parkingapi.service.exception.PasswordInvalidException;
 import br.com.mtonon.parkingapi.service.exception.UsernameUniqueViolationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,17 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 	
+	@ExceptionHandler(PasswordInvalidException.class)
+	public ResponseEntity<ErrorMessage> passwordInvalidException(PasswordInvalidException ex,
+			HttpServletRequest request, BindingResult result) {
+		
+		log.error("API Error: " + ex);
+		return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage(), result));
+	}
+	
 	/**
 	 * Metodo responsável por tratar o erro do tipo MethodArgumentNotValidException,
 	 * por meio da anotação @ExceptionHandler faz-se o registro da exceção que deve
@@ -29,6 +41,7 @@ public class ApiExceptionHandler {
 	 * 
 	 * @return ResponseEntity
 	 */
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorMessage> methodArgumentNotValidException(MethodArgumentNotValidException ex,
 			HttpServletRequest request, BindingResult result) {
@@ -73,5 +86,7 @@ public class ApiExceptionHandler {
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage()));
 	}
+	
+
 
 }
