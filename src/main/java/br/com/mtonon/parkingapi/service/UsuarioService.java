@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.mtonon.parkingapi.entity.Usuario;
 import br.com.mtonon.parkingapi.repository.UsuarioRepository;
+import br.com.mtonon.parkingapi.service.exception.EntityNotFoundException;
 import br.com.mtonon.parkingapi.service.exception.UsernameUniqueViolationException;
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +30,7 @@ public class UsuarioService {
 	@Transactional(readOnly = true)
 	public Usuario find(Long id) {
 		return this.usuarioRepository.findById(id).orElseThrow(
-				() -> new RuntimeException("Usuario não encontrado."));
+				() -> new EntityNotFoundException(String.format("Usuario com Id=%s não encontrado.", id)));
 	}
 
 	@Transactional
