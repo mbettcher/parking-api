@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mtonon.parkingapi.entity.Usuario;
+import br.com.mtonon.parkingapi.entity.dto.UsuarioCreateDTO;
+import br.com.mtonon.parkingapi.entity.dto.UsuarioResponseDTO;
+import br.com.mtonon.parkingapi.entity.dto.mapper.UsuarioMapper;
 import br.com.mtonon.parkingapi.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 
@@ -24,9 +27,9 @@ public class UsuarioController {
 	private final UsuarioService usuarioService;
 	
 	@PostMapping
-	public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
-		Usuario user = this.usuarioService.save(usuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);
+	public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioCreateDTO objDTO) {
+		Usuario user = this.usuarioService.save(UsuarioMapper.toUsuario(objDTO));
+		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDTO(user));
 	}
 	
 	@GetMapping("/{id}")
