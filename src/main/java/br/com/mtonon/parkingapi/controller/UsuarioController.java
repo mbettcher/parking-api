@@ -46,9 +46,9 @@ public class UsuarioController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> getAll() {
+	public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
 		List<Usuario> listagem = this.usuarioService.buscarTodos();
-		return ResponseEntity.ok().body(listagem);
+		return ResponseEntity.ok().body(UsuarioMapper.toListDTO(listagem));
 	}
 
 }
