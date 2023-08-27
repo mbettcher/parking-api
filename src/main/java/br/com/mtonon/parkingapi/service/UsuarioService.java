@@ -37,7 +37,7 @@ public class UsuarioService {
 		if(!senhaAtual.equals(user.getPassword())) {
 			throw new RuntimeException("A senha atual não confere!");
 		}
-		
+
 		user.setPassword(novaSenha);
 		return user;
 	}

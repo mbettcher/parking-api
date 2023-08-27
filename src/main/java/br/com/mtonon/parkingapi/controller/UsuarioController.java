@@ -18,6 +18,7 @@ import br.com.mtonon.parkingapi.entity.dto.UsuarioResponseDTO;
 import br.com.mtonon.parkingapi.entity.dto.UsuarioSenhaDTO;
 import br.com.mtonon.parkingapi.entity.dto.mapper.UsuarioMapper;
 import br.com.mtonon.parkingapi.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class UsuarioController {
 	private final UsuarioService usuarioService;
 	
 	@PostMapping
-	public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioCreateDTO objDTO) {
+	public ResponseEntity<UsuarioResponseDTO> create(@RequestBody @Valid UsuarioCreateDTO objDTO) {
 		Usuario user = this.usuarioService.save(UsuarioMapper.toUsuario(objDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDTO(user));
 	}
