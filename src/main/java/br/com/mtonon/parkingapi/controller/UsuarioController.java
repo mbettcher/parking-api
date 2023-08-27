@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.mtonon.parkingapi.entity.Usuario;
 import br.com.mtonon.parkingapi.entity.dto.UsuarioCreateDTO;
 import br.com.mtonon.parkingapi.entity.dto.UsuarioResponseDTO;
+import br.com.mtonon.parkingapi.entity.dto.UsuarioSenhaDTO;
 import br.com.mtonon.parkingapi.entity.dto.mapper.UsuarioMapper;
 import br.com.mtonon.parkingapi.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +40,9 @@ public class UsuarioController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<Usuario> updatePassword(@PathVariable Long id, @RequestBody Usuario usuario) {
-		Usuario user = this.usuarioService.editPassword(id, usuario);
-		return ResponseEntity.ok().body(user);
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UsuarioSenhaDTO objDTO) {
+		this.usuarioService.editPassword(id, objDTO.getSenhaAtual(), objDTO.getNovaSenha(), objDTO.getConfirmaSenha());
+		return ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping
