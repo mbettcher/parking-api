@@ -20,6 +20,7 @@ import br.com.mtonon.parkingapi.entity.dto.UsuarioSenhaDTO;
 import br.com.mtonon.parkingapi.entity.dto.mapper.UsuarioMapper;
 import br.com.mtonon.parkingapi.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -69,7 +70,7 @@ public class UsuarioController {
 	
 	@Operation(summary = "Atualizar a senha de um usuário", description = "Recurso para atualizar a senha de um usuário.",
 			responses = {
-					@ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso", 
+					@ApiResponse(responseCode = "200", description = "Senha atualizada com sucesso", 
 							content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
 					@ApiResponse(responseCode = "400", description = "Senha não confere", 
 						content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
@@ -82,6 +83,16 @@ public class UsuarioController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	
+	
+	
+	@Operation(summary = "Listar com todos os usuários", description = "Recurso para listar com todos os usuários cadastrados.",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "Listagem de usuários recuperada com sucesso", 
+							content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))),
+					@ApiResponse(responseCode = "400", description = "Senha não confere", 
+						content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+			})
 	@GetMapping
 	public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
 		List<Usuario> listagem = this.usuarioService.buscarTodos();
